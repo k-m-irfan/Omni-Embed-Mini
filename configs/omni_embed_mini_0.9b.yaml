@@ -1,0 +1,79 @@
+# Omni-Embed-Mini-0.9B
+#   frozen Qwen3-Embedding-0.6B backbone + custom Qwen3.5-0.8B vision tower
+#   + whisper-small / dasheng-base audio encoders. Trains all 5 media
+#   modalities (speech, audio, image, video, visual_doc).
+#
+# Recipe used for the released checkpoint (8 x 64 GB GPUs, bf16):
+#   bash scripts/train.sh configs/omni_embed_mini_0.9b.yaml --text_mining --media_mining
+# The released weights are the epoch-4 snapshot of this 10-epoch run.
+
+model:
+  backbone: Qwen/Qwen3-Embedding-0.6B
+  hidden_size: 1024
+  # custom: our own Qwen3.5 vision tower + projectors
+  # native: the backbone's built-in vision (Qwen3-VL-Embedding-*)
+  vision_mode: custom
+  # MRL slices are taken directly from the pooled backbone vector.
+  mrl_dims_coarse: [128, 256, 512, 1024]
+
+vision:
+  encoder: Qwen/Qwen3.5-0.8B
+  num_video_tokens: 196        # unused when data.video_as_images=true
+  max_video_frames: 16         # frames go in as image tokens (~64 tok/frame)
+  image_size: 224              # still-image / frame resize target
+
+audio:
+  whisper: openai/whisper-small
+  dasheng: mispeech/dasheng-base
+  tokens_per_encoder: 128
+  max_audio_duration: 60.0     # seconds; longer clips are truncated
+
+training:
+  output_dir: checkpoints/omni-embed-mini-0.9b   # run tag (e.g. -tm-mm) is appended
+  seed: 42
+  batch_size: 32               # per GPU; image + visual_doc use this
+  batch_size_overrides:        # per-modality per-GPU batch sizes
+    speech: 16
+    audio: 16
+    video: 4
+  grad_accum_steps: 1
+  epochs: 10
+  lr_audio: 2.0e-4             # audio projectors
+  lr_vision: 1.0e-4            # vision projectors
+  lr_encoder_lora: 1.0e-4      # phase-2 LoRA on the media encoders
+  temperature_init: 0.07
+  warmup_pct: 0.02
+  max_grad_norm: 1.0
+  max_seq_length: 2048
+  weight_decay: 0.01
+  phase_switch_pct: 0.2        # phase 2 (encoder LoRA + mining) after 20% of steps
+  log_every: 1
+  save_every_pct: 0.03         # rolling checkpoint every 3% of an epoch
+  eval_every_pct: 0.1          # in-loop SciFact probe
+  mc_eval_every_pct: 0.03      # in-loop media<->caption probe
+
+lora:
+  r: 16
+  alpha: 32
+  dropout: 0.0
+
+distillation:
+  weight: 1.0                  # cosine distillation to the frozen backbone (always on)
+
+mining:
+  # Mining is switched on from the CLI (--text_mining / --media_mining);
+  # these keys only parameterise it.
+  text_refresh_pct: 0.1        # text mining scheduled 10x per epoch
+  media_refresh_pct: 0.2       # media mining scheduled 5x per epoch
+  text_index_size: 50000       # captions per text-mining cycle
+  media_index_size: 10000      # samples per modality per media-mining cycle
+  n_hard_negs: 5
+  false_neg_threshold: 0.92
+
+data:
+  omni_sets_splits: [speech, audio, image, video, visual_doc]   # MBZUAI/Omni-Sets
+  video_as_images: true        # video frames go through the per-frame image projector
+  num_workers: 6
+  prefetch_factor: 1
+  max_duration_s:
+    video: 120                 # drop videos longer than 120 s

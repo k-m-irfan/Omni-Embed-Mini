@@ -1,0 +1,65 @@
+# MMEB-V2 video subset (6 smaller English tasks).
+# Subset of VLM2Vec experiments/public/eval/video.yaml (TIGER-AI-Lab/VLM2Vec).
+# Dropped: SmthSmthV2, Kinetics-700, Breakfast, MVBench, Video-MME,
+# ActivityNetQA, YouCook2, QVHighlight, Charades-STA, MomentSeeker.
+
+# Classification (2)
+HMDB51:
+    dataset_parser: video_classification
+    dataset_name: HMDB51
+    video_root: video-tasks/videos/video_cls/HMDB51
+    frame_root: video-tasks/frames/video_cls/HMDB51
+    num_sample_per_subset: None
+    max_frames_saved: 64
+    num_frames: 8
+    eval_type: global
+UCF101:
+    dataset_parser: video_classification
+    dataset_name: UCF101
+    video_root: video-tasks/videos/video_cls/UCF101
+    frame_root: video-tasks/frames/video_cls/UCF101
+    num_sample_per_subset: None
+    max_frames_saved: 64
+    num_frames: 8
+    eval_type: global
+
+# Retrieval (4)
+MSR-VTT:
+    dataset_parser: msrvtt
+    dataset_name: MSR-VTT
+    video_root: video-tasks/videos/video_ret/MSR-VTT/
+    frame_root: video-tasks/frames/video_ret/MSR-VTT/
+    num_sample_per_subset: None
+    max_frames_saved: 64
+    num_frames: 8
+    eval_type: global
+MSVD:
+    dataset_parser: msvd
+    dataset_name: MSVD
+    video_root: video-tasks/videos/video_ret/MSVD/
+    frame_root: video-tasks/frames/video_ret/MSVD/
+    num_sample_per_subset: None
+    max_frames_saved: 64
+    num_frames: 8
+    eval_type: global
+DiDeMo:
+    dataset_parser: didemo
+    dataset_name: DiDeMo
+    video_root: video-tasks/videos/video_ret/DiDeMo/
+    frame_root: video-tasks/frames/video_ret/DiDeMo/
+    num_sample_per_subset: None
+    max_frames_saved: 64
+    num_frames: 8
+    eval_type: global
+VATEX:
+    dataset_parser: vatex
+    dataset_name: VATEX
+    video_root: video-tasks/videos/video_ret/VATEX/
+    frame_root: video-tasks/frames/video_ret/VATEX/
+    num_sample_per_subset: None
+    max_frames_saved: 64
+    num_frames: 8
+    eval_type: global
+
+# QA — dropped (NExTQA + EgoSchema live in video_qa.tar.gz, 51.7 GB multi-part).
+# Re-enable by downloading video_qa.tar.gz-{00..04} and re-adding entries here.

@@ -1,0 +1,12 @@
+__pycache__/
+*.pyc
+*.log
+
+# training outputs and caches
+checkpoints/
+exported/
+cache/
+wandb/
+
+# evaluation outputs
+evaluations/results/

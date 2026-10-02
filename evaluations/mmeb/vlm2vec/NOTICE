@@ -1,0 +1,3 @@
+Minimal subset of the MMEB-V2 evaluation-dataset parsers and ranking metrics
+from VLM2Vec (https://github.com/TIGER-AI-Lab/VLM2Vec), used unmodified apart
+from the default log level. Licensed by its authors under the Apache License 2.0.

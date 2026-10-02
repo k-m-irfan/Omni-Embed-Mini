@@ -1,0 +1,69 @@
+# Omni-Embed-Mini-2.3B
+#   frozen Qwen3-VL-Embedding-2B backbone (native image / video / document
+#   vision) + whisper-small / dasheng-base audio encoders. Only the audio
+#   path (speech + general audio) is trained.
+#
+# Recipe used for the released checkpoint (8 x 64 GB GPUs, bf16):
+#   bash scripts/train.sh configs/omni_embed_mini_2.3b.yaml --text_mining --media_mining
+# The released weights are the epoch-8 snapshot of this 10-epoch run.
+
+model:
+  backbone: Qwen/Qwen3-VL-Embedding-2B
+  hidden_size: 2048
+  vision_mode: native          # vision comes from the frozen backbone
+  mrl_dims_coarse: [128, 256, 512, 1024, 2048]
+
+vision:                        # no custom vision tower in native mode
+  num_video_tokens: 196
+  max_video_frames: 196
+  image_size: 224
+
+audio:
+  whisper: openai/whisper-small
+  dasheng: mispeech/dasheng-base
+  tokens_per_encoder: 128
+  max_audio_duration: 60.0
+
+training:
+  output_dir: checkpoints/omni-embed-mini-2.3b   # run tag (e.g. -tm-mm) is appended
+  seed: 42
+  batch_size: 8                # per GPU
+  batch_size_overrides:
+    speech: 8
+    audio: 8
+  grad_accum_steps: 2
+  epochs: 10
+  lr_audio: 2.0e-4
+  lr_vision: 1.0e-4
+  lr_encoder_lora: 1.0e-4
+  temperature_init: 0.07
+  warmup_pct: 0.02
+  max_grad_norm: 1.0
+  max_seq_length: 4096
+  weight_decay: 0.01
+  phase_switch_pct: 0.2
+  log_every: 1
+  save_every_pct: 0.03
+  eval_every_pct: 0.1
+  mc_eval_every_pct: 0.03
+
+lora:
+  r: 16
+  alpha: 32
+  dropout: 0.0
+
+distillation:
+  weight: 1.0
+
+mining:
+  text_refresh_pct: 0.1
+  media_refresh_pct: 0.2
+  text_index_size: 50000
+  media_index_size: 10000
+  n_hard_negs: 5
+  false_neg_threshold: 0.92
+
+data:
+  omni_sets_splits: [speech, audio]
+  num_workers: 6
+  prefetch_factor: 1

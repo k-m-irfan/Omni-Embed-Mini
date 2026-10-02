@@ -1,0 +1,77 @@
+# MMEB-V2 image subset (10 smaller English tasks).
+# Subset of VLM2Vec experiments/public/eval/image.yaml (TIGER-AI-Lab/VLM2Vec).
+# Only tasks that are present as configs in `ziyjiang/MMEB_Test_Instruct`.
+# Dropped: ImageNet-1K/A/R, N24News, HatefulMemes, SUN397, Place365, ObjectNet,
+# A-OKVQA, DocVQA, InfographicsVQA, ChartQA, Visual7W, ScienceQA, VizWiz, GQA,
+# TextVQA, VisDial, WebQA, Wiki-SS-NQ, CIRR, OVEN, MSCOCO (VG), RefCOCO,
+# RefCOCO-Matching, Visual7W-Pointing.
+
+# CLS (2)
+VOC2007:
+    dataset_parser: image_cls
+    dataset_name: VOC2007
+    dataset_split: test
+    image_root: image-tasks/
+    eval_type: local
+Country211:
+    dataset_parser: image_cls
+    dataset_name: Country211
+    dataset_split: test
+    image_root: image-tasks/
+    eval_type: local
+
+# QA (1)
+OK-VQA:
+    dataset_parser: image_qa
+    dataset_name: OK-VQA
+    dataset_split: test
+    image_root: image-tasks/
+    eval_type: local
+
+# RET t -> i (3): EDIS (headline+image+caption), MSCOCO_t2i, VisualNews_t2i
+EDIS:
+    dataset_parser: image_t2i
+    dataset_name: EDIS
+    dataset_split: test
+    image_root: image-tasks/
+    eval_type: local
+MSCOCO_t2i:
+    dataset_parser: image_t2i
+    dataset_name: MSCOCO_t2i
+    dataset_split: test
+    image_root: image-tasks/
+    eval_type: local
+VisualNews_t2i:
+    dataset_parser: image_t2i
+    dataset_name: VisualNews_t2i
+    dataset_split: test
+    image_root: image-tasks/
+    eval_type: local
+
+# RET i -> t (2): MSCOCO_i2t, VisualNews_i2t
+MSCOCO_i2t:
+    dataset_parser: image_i2t
+    dataset_name: MSCOCO_i2t
+    dataset_split: test
+    image_root: image-tasks/
+    eval_type: local
+VisualNews_i2t:
+    dataset_parser: image_i2t
+    dataset_name: VisualNews_i2t
+    dataset_split: test
+    image_root: image-tasks/
+    eval_type: local
+
+# Image-image (2): NIGHTS, FashionIQ
+NIGHTS:
+    dataset_parser: image_i2i_vg
+    dataset_name: NIGHTS
+    dataset_split: test
+    image_root: image-tasks/
+    eval_type: local
+FashionIQ:
+    dataset_parser: image_i2i_vg
+    dataset_name: FashionIQ
+    dataset_split: test
+    image_root: image-tasks/
+    eval_type: local

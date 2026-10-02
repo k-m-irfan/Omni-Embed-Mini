@@ -1,0 +1,35 @@
+# Omni-Embed-Mini: training + evaluation dependencies (Python 3.11).
+#
+# Install PyTorch FIRST for your accelerator (see README), then:
+#     pip install -r requirements.txt
+#
+# Reference stack: torch 2.7.1 (ROCm 6.3 build on AMD MI210/MI250; the CUDA
+# build of the same version works on NVIDIA).
+
+# --- model / training ---
+transformers==5.5.0          # >=5 required (Qwen3-VL / Qwen3.5 backbones)
+tokenizers==0.22.2
+accelerate==1.13.0
+safetensors==0.7.0
+huggingface_hub==1.9.2
+datasets==4.0.0
+faiss-cpu==1.13.2            # hard-negative mining index
+dasheng==0.0.9               # general-audio encoder
+qwen-vl-utils==0.0.14        # image pre-resize in the exported processor (2.3B)
+numpy==2.4.4
+PyYAML==6.0.3
+tqdm==4.67.3
+filelock==3.25.2
+
+# --- media decoding ---
+pillow==12.1.1
+soundfile==0.13.1
+librosa==0.11.0
+av==17.0.0
+
+# --- evaluation ---
+mteb==2.12.13
+pytrec-eval-terrier==0.5.10  # MMEB ranking metrics (vendored VLM2Vec)
+
+# --- optional: experiment logging (train.py --wandb_run_name) ---
+wandb==0.25.0
