@@ -1,7 +1,7 @@
 ### Accepted at **EMNLP 2026 Findings 🏅**
 # Omni-Embed-Mini: Binding Modalities Without Forgetting via Dense Distillation
 
-#### [Mohammed Irfan Kurpath](https://scholar.google.com/citations?user=GJp0keYAAAAJ&hl=en), Jaseel Muhammad Kaithakkodan, [Sahal Shaji Mullappilly](https://scholar.google.com/citations?user=LJWxVpUAAAAJ&hl=en), Ivan Laptev, and [Hisham Cholakkal](https://scholar.google.com/citations?hl=en&user=bZ3YBRcAAAAJ)
+#### [Mohammed Irfan Kurpath](https://scholar.google.com/citations?user=GJp0keYAAAAJ&hl=en), [Jaseel Muhammad Kaithakkodan](https://scholar.google.com/citations?user=-sqbA5oAAAAJ&hl=en), [Sahal Shaji Mullappilly](https://scholar.google.com/citations?user=LJWxVpUAAAAJ&hl=en), [Ivan Laptev](https://scholar.google.com/citations?user=-9ifK0cAAAAJ&hl=en), and [Hisham Cholakkal](https://scholar.google.com/citations?hl=en&user=bZ3YBRcAAAAJ)
 
 #### **Mohamed Bin Zayed University of Artificial Intelligence (MBZUAI), UAE**
 [![Website](https://img.shields.io/badge/Project-Website-87CEEB)](https://omniembed.cvmbzuai.com)
