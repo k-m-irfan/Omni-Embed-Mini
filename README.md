@@ -1,3 +1,5 @@
+<div align="center">
+
 ### Accepted at **EMNLP 2026 Findings 🏅**
 # Omni-Embed-Mini: Binding Modalities Without Forgetting via Dense Distillation
 
@@ -10,12 +12,22 @@
 [![Model 2.3B](https://img.shields.io/badge/🤗%20Model-Omni--Embed--Mini--2.3B-F9D371)](https://huggingface.co/MBZUAI/Omni-Embed-Mini-2.3B)
 [![Dataset](https://img.shields.io/badge/🤗%20Dataset-Omni--Sets-F9D371)](https://huggingface.co/datasets/MBZUAI/Omni-Sets)
 
+</div>
+
 Omni-Embed-Mini maps text, speech, audio, images, video and visually-rich
 documents into one shared embedding space **without updating any text-side
 parameter**. Each media sample is paired with a dense caption, and the
 training target is the frozen backbone's own embedding of that caption, so
 lightweight projectors plus LoRA adapters on the media encoders are enough to
 align every modality.
+
+<div align="center">
+
+<video src="https://omniembed.cvmbzuai.com/media/overview.mp4"
+       poster="https://omniembed.cvmbzuai.com/media/overview-poster.jpg"
+       controls muted playsinline></video>
+
+</div>
 
 ## Installation
 
