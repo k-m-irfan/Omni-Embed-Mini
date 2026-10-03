@@ -21,14 +21,6 @@ training target is the frozen backbone's own embedding of that caption, so
 lightweight projectors plus LoRA adapters on the media encoders are enough to
 align every modality.
 
-<div align="center">
-
-<video src="https://omniembed.cvmbzuai.com/media/overview.mp4"
-       poster="https://omniembed.cvmbzuai.com/media/overview-poster.jpg"
-       controls muted playsinline></video>
-
-</div>
-
 ## Installation
 
 ```bash
